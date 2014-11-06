@@ -1,12 +1,12 @@
 <?
-if(empty($GLOBALS['SysValue'])) exit(header("Location: /"));
-
-if(isset($_REQUEST['m_orderid']))
+if(isset($_GET['m_orderid']))
 {
-	$order_metod="payeer";
-	$success_function=true; 
-	$crc = 0; 
-	$my_crc = 0;
-	$inv_id = $_POST['m_orderid'];
+	$order_metod = 'payeer';
+	$success_function = false; 
+	$crc = "NoN"; 
+	$my_crc = "NoN";
+	$inv_id = $_GET['m_orderid'];
+	
+	header("Location: " . $SysValue['dir']['dir'] . "/users/order.html?orderId=" . $_GET['m_orderid'] . "#PphpshopOrder");
 }
 ?>
