@@ -1,4 +1,4 @@
-<?
+<?php
 if(isset($_GET['m_orderid']))
 {
 	$order_metod = 'payeer';

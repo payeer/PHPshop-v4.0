@@ -1,4 +1,4 @@
-<?
+<?php
 function UpdateNumOrder($uid)
 {
 	$last_num = substr($uid, -2);
