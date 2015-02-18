@@ -13,7 +13,7 @@ $o_req = explode("-", $_POST['ouid']);
 
 $m_orderid = $o_req[0] . $o_req[1];
 
-$m_amount  = $GLOBALS['SysValue']['other']['total'];
+$m_amount = number_format($GLOBALS['SysValue']['other']['total'], 2, '.', '');
 
 $m_curr = $SysValue['payeer']['currency'];
 
