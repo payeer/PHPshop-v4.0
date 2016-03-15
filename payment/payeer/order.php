@@ -1,4 +1,4 @@
-<?php
+ï»¿<?php
 
 if (empty($GLOBALS['SysValue'])) 
 {
@@ -6,19 +6,12 @@ if (empty($GLOBALS['SysValue']))
 }
 
 $m_url = $SysValue['payeer']['merchant_url'];
-
 $m_shop = $SysValue['payeer']['merchant_id'];
-
 $o_req = explode("-", $_POST['ouid']);
-
 $m_orderid = $o_req[0] . $o_req[1];
-
 $m_amount = number_format($GLOBALS['SysValue']['other']['total'], 2, '.', '');
-
-$m_curr = $SysValue['payeer']['currency'];
-
-$m_desc = base64_encode('Payment ' . $m_orderid);
-
+$m_curr = $SysValue['payeer']['currency'] == 'RUR' ? 'RUB' : $SysValue['payeer']['currency'];
+$m_desc = base64_encode($GLOBALS['SysValue']['other']['dop_info']);
 $m_key = $SysValue['payeer']['secret_key']; 
 
 $arHash = array(
@@ -29,6 +22,7 @@ $arHash = array(
 	$m_desc,
 	$m_key
 );
+
 $sign = strtoupper(hash('sha256', implode(":", $arHash)));
 
 $disp = "
@@ -39,6 +33,6 @@ $disp = "
 	<input type=hidden name=m_curr value=$m_curr>
 	<input type=hidden name=m_desc value=$m_desc>
 	<input type=hidden name=m_sign value=$sign>
-	<input type=submit name=m_process value='Îïëàòèòü'>
+	<input type=submit name=m_process value='ÐžÐ¿Ð»Ð°Ñ‚Ð¸Ñ‚ÑŒ'>
 </form>";
 ?>
