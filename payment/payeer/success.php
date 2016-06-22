@@ -1,12 +1,7 @@
 <?php
-if(isset($_GET['m_orderid']))
+if (isset($_GET['m_orderid']))
 {
-	$order_metod = 'payeer';
-	$success_function = false; 
-	$crc = "NoN"; 
-	$my_crc = "NoN";
-	$inv_id = $_GET['m_orderid'];
-	
-	header("Location: " . $SysValue['dir']['dir'] . "/users/order.html?orderId=" . $_GET['m_orderid'] . "#PphpshopOrder");
+	$order_id = preg_replace('/[^a-zA-Z0-9_-]/', '', substr($_GET['m_orderid'], 0, 32));
+	header("Location: " . $SysValue['dir']['dir'] . "/users/order.html?orderId=" . $order_id . "#PphpshopOrder");
 }
 ?>
