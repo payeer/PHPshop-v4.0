@@ -28,17 +28,17 @@ if (isset($_POST["m_operation_id"]) && isset($_POST["m_sign"]))
 
 	$log_text = 
 	"--------------------------------------------------------\n" .
-	"operation id       " . $_POST['m_operation_id'] . "\n" .
-	"operation ps       " . $_POST['m_operation_ps'] . "\n" .
-	"operation date     " . $_POST['m_operation_date'] . "\n" .
-	"operation pay date " . $_POST['m_operation_pay_date'] . "\n" .
-	"shop               " . $_POST['m_shop'] . "\n" .
-	"order id           " . $_POST['m_orderid'] . "\n" .
-	"amount             " . $_POST['m_amount'] . "\n" .
-	"currency           " . $_POST['m_curr'] . "\n" .
-	"description        " . base64_decode($_POST['m_desc']) . "\n" .
-	"status             " . $_POST['m_status'] . "\n" .
-	"sign               " . $_POST['m_sign'] . "\n\n";
+	"operation id		" . $_POST['m_operation_id'] . "\n" .
+	"operation ps		" . $_POST['m_operation_ps'] . "\n" .
+	"operation date		" . $_POST['m_operation_date'] . "\n" .
+	"operation pay date	" . $_POST['m_operation_pay_date'] . "\n" .
+	"shop				" . $_POST['m_shop'] . "\n" .
+	"order id			" . $_POST['m_orderid'] . "\n" .
+	"amount				" . $_POST['m_amount'] . "\n" .
+	"currency			" . $_POST['m_curr'] . "\n" .
+	"description		" . base64_decode($_POST['m_desc']) . "\n" .
+	"status				" . $_POST['m_status'] . "\n" .
+	"sign				" . $_POST['m_sign'] . "\n\n";
 	
 	$log_file = $SysValue['payeer']['paylog'];
 	
@@ -139,32 +139,20 @@ if (isset($_POST["m_operation_id"]) && isset($_POST["m_sign"]))
 				switch ($_POST['m_status'])
 				{
 					case 'success':
-					
 						$status_success = $SysValue['payeer']['status_success'];
+						$sql = "INSERT INTO " . $SysValue['base']['table_name33'] . " VALUES 
+							('$m_orderid','Payeer','$m_amount','" . date("U") . "')";
 						
-						if ($row['statusi'] != $status_success)
-						{
-							$sql = "INSERT INTO " . $SysValue['base']['table_name33'] . " VALUES 
-								('$m_orderid','Payeer','$m_amount','" . date("U") . "')";
-							
-							$result = mysql_query($sql);
-							
-							$sql = "UPDATE " . $SysValue['base']['table_name1'] . " SET statusi='$status_success' WHERE uid='$new_uid'";
-							$result = mysql_query($sql);
-						}
-
+						$result = mysql_query($sql);
+						
+						$sql = "UPDATE " . $SysValue['base']['table_name1'] . " SET statusi='$status_success' WHERE uid='$new_uid'";
+						$result = mysql_query($sql);
 						break;
 						
 					default:
-					
 						$status_fail = $SysValue['payeer']['status_fail'];
-						
-						if ($row['statusi'] != $status_fail)
-						{
-							$sql = "UPDATE " . $SysValue['base']['table_name1'] . " SET statusi='$status_fail' WHERE uid='$new_uid'";
-							$result = mysql_query($sql);
-						}
-						
+						$sql = "UPDATE " . $SysValue['base']['table_name1'] . " SET statusi='$status_fail' WHERE uid='$new_uid'";
+						$result = mysql_query($sql);
 						$message .= " - статус платежа не является success\n";
 						$err = true;
 						break;
