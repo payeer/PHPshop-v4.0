@@ -22,7 +22,7 @@ if (isset($_POST["m_operation_id"]) && isset($_POST["m_sign"]))
 	$err = false;
 	$message = '';
 	$m_amount = $_POST['m_amount'];
-	$m_orderid = $_POST['m_orderid'];
+	$m_orderid = preg_replace('/[^a-zA-Z0-9_-]/', '', substr($_POST['m_orderid'], 0, 32));
 	
 	// запись логов
 
@@ -96,7 +96,7 @@ if (isset($_POST["m_operation_id"]) && isset($_POST["m_sign"]))
 	{
 		// загрузка заказа
 		
-		$new_uid = UpdateNumOrder($_POST["m_orderid"]);
+		$new_uid = UpdateNumOrder($m_orderid);
 	
 		@mysql_connect ($SysValue['connect']['host'], $SysValue['connect']['user_db'],  $SysValue['connect']['pass_db']) or 
 			@die("" . PHPSHOP_error(101, $SysValue['my']['error_tracer']) . "");
@@ -185,11 +185,11 @@ if (isset($_POST["m_operation_id"]) && isset($_POST["m_sign"]))
 			mail($to, 'Ошибка оплаты', $message, $headers);
 		}
 		
-		exit ($m_orderid . "|error");
+		exit ($_POST['m_orderid'] . "|error");
 	}
 	else
 	{
-		exit ($m_orderid . "|success");
+		exit ($_POST['m_orderid'] . "|success");
 	}
 }
 ?>
